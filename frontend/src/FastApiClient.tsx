@@ -23,8 +23,8 @@ export class FastApiClient {
       queryParams = '?' + queryParams;
     }
 
-    const token = isAuthenticated();
-    if ( token ) {
+    const token = await isAuthenticated();
+    if (token) {
       options.headers = {
         ...options.headers,
         ...authHeaders(token).headers,

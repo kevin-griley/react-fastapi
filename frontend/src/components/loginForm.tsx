@@ -6,6 +6,7 @@ import { useApi } from '../contexts/ApiProvider';
 import { useQuery } from '@tanstack/react-query';
 import { IconCheck, IconX } from '@tabler/icons';
 import decodeJwt from 'jwt-decode';
+import { setToken, removeToken } from '../utils/auth';
 
 import {
     Paper,
@@ -93,6 +94,7 @@ export const LoginForm = () => {
       const data = response.body;
       if (response.ok) {
         form.reset();
+
         showNotification({
           autoClose: 5000,
           title: "Success",
@@ -101,15 +103,18 @@ export const LoginForm = () => {
           icon: <IconCheck />,
           loading: false,
         });
+
         if ('access_token' in data) {
           const decodedToken: any = decodeJwt(data['access_token']);
-          localStorage.setItem('token', data['access_token']);
+          await setToken(data['access_token']);
         }
+
         navigate('/feed');
 
 
       } else {
         let error = response.body.detail;
+
         form.setErrors({ username: error });
 
         showNotification({
@@ -119,7 +124,9 @@ export const LoginForm = () => {
           color: 'red',
           icon: <IconX />,
           loading: false,
-        });          
+        });     
+        
+        await removeToken()
       }
 
       return response;
