@@ -1,0 +1,10 @@
+version: '3.3'
+
+services:
+  api:
+    image: grileycontainers.azurecr.io/griley-app-api:v1
+
+  client:
+    image: grileycontainers.azurecr.io/griley-app-client:v1
+    ports:
+      - "3000:80"
