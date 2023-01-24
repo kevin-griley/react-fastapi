@@ -41,10 +41,6 @@ export class FastApiClient {
         break;
     }
 
-    console.log(
-      "Requesting", requestBody
-    )
-
     const token = await isAuthenticated();
     if (token) {
       options.headers = {
@@ -63,7 +59,9 @@ export class FastApiClient {
           body: requestBody,
         }
       );
-    } catch (error) {
+    } 
+    
+    catch (error) {
       response = {
         ok: false,
         status: 500,
@@ -80,29 +78,30 @@ export class FastApiClient {
       status: response.status,
       body: response.status !== 204 ? await response.json() : null,
     } as RequestResponse;
+
   }
 
-  async get(url: string, query?: { [key: string]: string }, options?: { [key: string]: any }) {
+  async get(url: string, query?: {[key: string]: string}, options?: { [key: string]: any }) {
     return this.request({ method: "GET", url, query, ...options });
   }
 
-  async post(url: string, body?: { [key: string]: any }, options?: { [key: string]: any }) {
+  async post(url: string, body?: {[key: string]: any}, options?: {[key: string]: any }) {
     return this.request({ method: "POST", url, body, ...options });
   }
 
-  async put(url: string, body?: { [key: string]: any }, options?: { [key: string]: any }) {
+  async put(url: string, body?: {[key: string]: any}, options?: {[key: string]: any }) {
     return this.request({ method: "PUT", url, body, ...options });
   }
 
-  async delete(url: string, options?: { [key: string]: any }) {
+  async delete(url: string, options?: {[key: string]: any }) {
     return this.request({method: "DELETE", url, ...options});
   }
 
-  async login(body: { [key: string]: any }) {
+  async login(body: {[key: string]: any }) {
     return this.request({formType: "form", method: "POST", url: LOGIN_URL, body });
   }
 
-  async post_form(url: string, body: { [key: string]: any }, options?: { [key: string]: any }) {
+  async post_form(url: string, body: {[key: string]: any}, options?: {[key: string]: any }) {
     return this.request({formType: "form", method: "POST", url, body, ...options });
   }
 }

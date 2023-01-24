@@ -93,7 +93,13 @@ export const LoginForm = () => {
       const response = await api.login(values);
       const data = response.body;
       if (response.ok) {
-        form.reset();
+
+        navigate('/feed');
+
+        if ('access_token' in data) {
+          const decodedToken: any = decodeJwt(data['access_token']);
+          await setToken(data['access_token']);
+        }
 
         showNotification({
           autoClose: 5000,
@@ -103,13 +109,6 @@ export const LoginForm = () => {
           icon: <IconCheck />,
           loading: false,
         });
-
-        if ('access_token' in data) {
-          const decodedToken: any = decodeJwt(data['access_token']);
-          await setToken(data['access_token']);
-        }
-
-        navigate('/feed');
 
 
       } else {
