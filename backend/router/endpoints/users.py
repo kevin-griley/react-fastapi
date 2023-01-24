@@ -7,6 +7,11 @@ from router import deps
 router = APIRouter()
 
 
+@router.get("/me", response_model=schemas.User)
+def read_users_me(current_user: models.User = Depends(deps.get_current_active_user)):
+    return current_user
+
+
 # Create a new user
 @router.post("/", response_model=schemas.User)
 def create_user(user: schemas.UserCreate, db: Session = Depends(deps.get_db)):

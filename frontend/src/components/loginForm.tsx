@@ -1,12 +1,8 @@
 import { useForm } from '@mantine/form';
 import { Link, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from "react";
 import { showNotification } from '@mantine/notifications';
 import { useApi } from '../contexts/ApiProvider';
-import { useQuery } from '@tanstack/react-query';
 import { IconCheck, IconX } from '@tabler/icons';
-import decodeJwt from 'jwt-decode';
-import { setToken, removeToken } from '../utils/auth';
 
 import {
     Paper,
@@ -66,9 +62,6 @@ const useStyles = createStyles((theme) => ({
   }));
 
 
-
-
-
 export const LoginForm = () => {
 
   const api = useApi();
@@ -91,16 +84,9 @@ export const LoginForm = () => {
     const submit_form = async (values : any) => {
 
       const response = await api.login(values);
-      const data = response.body;
       if (response.ok) {
 
         navigate('/feed');
-
-        if ('access_token' in data) {
-          const decodedToken: any = decodeJwt(data['access_token']);
-          await setToken(data['access_token']);
-        }
-
         showNotification({
           autoClose: 5000,
           title: "Success",
@@ -112,10 +98,11 @@ export const LoginForm = () => {
 
 
       } else {
+        
+        await api.logout();
+
         let error = response.body.detail;
-
         form.setErrors({ username: error });
-
         showNotification({
           autoClose: 5000,
           title: "Error",
@@ -125,7 +112,6 @@ export const LoginForm = () => {
           loading: false,
         });     
         
-        await removeToken()
       }
 
       return response;
