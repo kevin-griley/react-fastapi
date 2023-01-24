@@ -11,27 +11,7 @@ interface IApiContext {
   post_form: (url: string, body: {[key: string]: any}, options?: {[key: string]: any}) => Promise<RequestResponse>;
 }
 
-const ApiContext = createContext<IApiContext>({
-  api: new FastApiClient,
-  get: function (url: string, query?: { [key: string]: string; } | undefined, options?: { [key: string]: any; } | undefined): Promise<RequestResponse> {
-    throw new Error('Function not implemented.');
-  },
-  post: function (url: string, body?: { [key: string]: any; } | undefined, options?: { [key: string]: any; } | undefined): Promise<RequestResponse> {
-    throw new Error('Function not implemented.');
-  },
-  put: function (url: string, body?: { [key: string]: any; } | undefined, options?: { [key: string]: any; } | undefined): Promise<RequestResponse> {
-    throw new Error('Function not implemented.');
-  },
-  delete: function (url: string, options?: { [key: string]: any; } | undefined): Promise<RequestResponse> {
-    throw new Error('Function not implemented.');
-  },
-  login: function (body: { [key: string]: any; }): Promise<RequestResponse> {
-    throw new Error('Function not implemented.');
-  },
-  post_form: function (url: string, body: { [key: string]: any; }, options?: { [key: string]: any; } | undefined): Promise<RequestResponse> {
-    throw new Error('Function not implemented.');
-  }
-});
+const ApiContext = createContext( {} as IApiContext );
 
 const ApiProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const api = new FastApiClient();
