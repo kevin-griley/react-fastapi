@@ -3,6 +3,7 @@ import { createStyles, Header, Group, Burger, Title, Image} from '@mantine/core'
 import { SwitchToggle } from './SwitchToggle'; 
 import { NavLink, useLocation } from 'react-router-dom';
 import { useUser } from '../contexts/UserProvider';
+import { UserMenu } from './userMenu';
 
 
 const useStyles = createStyles((theme) => ({
@@ -87,9 +88,8 @@ export const HeaderSimple: React.FC<HeaderSimpleProps> = ({ links, burgerOpened,
     </NavLink>
   ));
 
-
   return (
-    <Header height={60} className={classes.header} pos={ headerPosition }>
+    <Header height={60} className={classes.header} pos={ headerPosition }  >
 
         <Group spacing={0}>
           { showSidebar ? <Burger opened={burgerOpened} onClick={burgerToggle} className={classes.burger} size="md" /> : <></> }
@@ -103,11 +103,15 @@ export const HeaderSimple: React.FC<HeaderSimpleProps> = ({ links, burgerOpened,
         </Group>
 
         <Group spacing={5} className={classes.links}>
-          <SwitchToggle />
-          {items}
+
+        <SwitchToggle />
+
+          { user ? < UserMenu/> : <></> }
+
+          { !user ? items : <></> }
+
         </Group>
         
-
     </Header>
   );
 }
