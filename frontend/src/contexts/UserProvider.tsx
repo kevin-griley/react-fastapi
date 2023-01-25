@@ -1,8 +1,11 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { isAuthenticated, removeToken } from '../utils/auth';
+import { isAuthenticated, removeToken, setToken } from '../utils/auth';
 import { User } from '../pages/UserPage';
 import { useApi } from './ApiProvider';
 import { RequestResponse } from '../FastApiClient';
+
+
+const LOGIN_URL: string = "/login/access-token";
 
 interface UserContext {
     user: User | null | undefined;
@@ -30,11 +33,18 @@ const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
     }, [api]);
 
     const login = async (email: string, password: string) => {
-        const result = await api.getAccessToken({ username: email, password: password });
+        const result = await api.post_form(LOGIN_URL,  { username: email, password: password });
+
         if (result.ok) {
+
+            if ('access_token' in result.body) {
+              await setToken(result.body['access_token']);
+            }
+
             const response = await api.get('/users/me');
             setUser(response.ok ? response.body : null);
             return response;
+            
         }
         return result;
     };

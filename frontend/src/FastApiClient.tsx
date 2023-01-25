@@ -1,7 +1,5 @@
 const BASE_API_URL: string = "/api";
-const LOGIN_URL: string = "/login/access-token";
 import { isAuthenticated } from "./utils/auth";
-import { setToken } from './utils/auth';
 
 function authHeaders(token: string) {
   return {
@@ -96,17 +94,6 @@ export class FastApiClient {
 
   async delete(url: string, options?: {[key: string]: any }) {
     return this.request({method: "DELETE", url, ...options});
-  }
-
-  async getAccessToken(body: {[key: string]: any }) {
-    const r =  await this.request({formType: "form", method: "POST", url: LOGIN_URL, body });
-    if (r.ok) {
-      const data = r.body;
-      if ('access_token' in data) {
-        await setToken(data['access_token']);
-      }
-    }
-    return r;
   }
 
   async post_form(url: string, body: {[key: string]: any}, options?: {[key: string]: any }) {

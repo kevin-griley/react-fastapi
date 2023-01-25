@@ -7,7 +7,6 @@ interface IApiContext {
   post: (url: string, body?: {[key: string]: any}, options?: {[key: string]: any}) => Promise<RequestResponse>;
   put: (url: string, body?: {[key: string]: any}, options?: {[key: string]: any}) => Promise<RequestResponse>;
   delete: (url: string, options?: {[key: string]: any}) => Promise<RequestResponse>;
-  getAccessToken: (body: {[key: string]: any}) => Promise<RequestResponse>;
   post_form: (url: string, body: {[key: string]: any}, options?: {[key: string]: any}) => Promise<RequestResponse>;
 }
 
@@ -23,7 +22,6 @@ const ApiProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         post: api.post.bind(api),
         put: api.put.bind(api),
         delete: api.delete.bind(api),
-        getAccessToken: api.getAccessToken.bind(api),
         post_form: api.post_form.bind(api),
       }}
     >
