@@ -1,7 +1,7 @@
 import { Paper, createStyles, Title} from '@mantine/core';
 
 import Body from '../components/Body';
-import Posts from '../components/posts'
+import Posts from '../components/posts';
 
 const useStyles = createStyles((theme) => ({
   body: {
@@ -19,10 +19,10 @@ export default function FeedPage() {
 
   return (
     <Body showSidebar >
-      <Paper className={ classes.body } radius="lg" >
-        <Title> Newsfeed </Title>
-        <Posts content='explore' />
-      </Paper>
+        <Paper className={ classes.body } radius="lg" >
+          <Title> Newsfeed </Title>
+          <Posts content='explore' />
+        </Paper>
     </Body>
 )
 }

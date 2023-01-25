@@ -8,7 +8,6 @@ interface IApiContext {
   put: (url: string, body?: {[key: string]: any}, options?: {[key: string]: any}) => Promise<RequestResponse>;
   delete: (url: string, options?: {[key: string]: any}) => Promise<RequestResponse>;
   login: (body: {[key: string]: any}) => Promise<RequestResponse>;
-  logout: () => Promise<void>;
   post_form: (url: string, body: {[key: string]: any}, options?: {[key: string]: any}) => Promise<RequestResponse>;
 }
 
@@ -25,7 +24,6 @@ const ApiProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         put: api.put.bind(api),
         delete: api.delete.bind(api),
         login: api.login.bind(api),
-        logout: api.logout.bind(api),
         post_form: api.post_form.bind(api),
       }}
     >

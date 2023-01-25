@@ -1,8 +1,7 @@
 const BASE_API_URL: string = "/api";
 const LOGIN_URL: string = "/login/access-token";
 import { isAuthenticated } from "./utils/auth";
-import decodeJwt from 'jwt-decode';
-import { setToken, removeToken } from './utils/auth';
+import { setToken } from './utils/auth';
 
 function authHeaders(token: string) {
   return {
@@ -43,7 +42,7 @@ export class FastApiClient {
         break;
     }
 
-    const token = await isAuthenticated();
+    const token = isAuthenticated();
     if (token) {
       options.headers = {
         ...options.headers,
@@ -101,16 +100,13 @@ export class FastApiClient {
 
   async login(body: {[key: string]: any }) {
     const r =  await this.request({formType: "form", method: "POST", url: LOGIN_URL, body });
-    const data = r.body;
-    if ('access_token' in data) {
-      const decodedToken: any = decodeJwt(data['access_token']);
-      await setToken(data['access_token']);
+    if (r.ok) {
+      const data = r.body;
+      if ('access_token' in data) {
+        setToken(data['access_token']);
+      }
     }
     return r;
-  }
-
-  async logout() {
-    await removeToken();
   }
 
   async post_form(url: string, body: {[key: string]: any}, options?: {[key: string]: any }) {
