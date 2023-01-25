@@ -38,6 +38,7 @@ const useStyles = createStyles((theme) => ({
   },
 
   form: {
+    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
     overflowY: 'auto',
     borderRight: `1px solid ${theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[3]
       }`,

@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from router.api_router import api_router
 from starlette.middleware.cors import CORSMiddleware
 from core.config import settings
+from starlette.staticfiles import StaticFiles
 
 from fastapi import Request, Response
 
@@ -13,6 +14,7 @@ Base.metadata.create_all(bind=engine)
 app = FastAPI()
 
 app.include_router(api_router, prefix=settings.API_STR)
+app.mount("/api/static", StaticFiles(directory="static"), name="static")
 
 @app.middleware("http")
 async def db_session_middleware(request: Request, call_next):

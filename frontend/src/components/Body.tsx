@@ -6,6 +6,8 @@ import { HeaderSimple } from './header';
 import { NavbarSegmented } from './navbar';
 import { FooterLinks } from './footer';
 
+import { useUser } from '../contexts/UserProvider';
+
 
 interface BodyProps {
     showSidebar: boolean;
@@ -18,13 +20,10 @@ export default function Body({ showSidebar, children }: BodyProps ) {
     const tabs = [
       { link: "/", label: "Resume", icon: IconUsers },
       { link: "/feed", label: "Feed", icon: IconUsers  },
-      { link: "/login", label: "Login", icon: IconUsers  },
     ];
 
     const navs = [
         { link: "/", label: "Resume" },
-        { link: "/feed", label: "Feed" },
-        { link: "/login", label: "Login" },
       ];
 
     const foots =  [ {

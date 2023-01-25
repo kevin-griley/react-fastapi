@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { createStyles, Header, Group, Burger, Title } from '@mantine/core';
+import { createStyles, Header, Group, Burger, Title, Image} from '@mantine/core';
 import { SwitchToggle } from './SwitchToggle'; 
 import { NavLink, useLocation } from 'react-router-dom';
+import { useUser } from '../contexts/UserProvider';
 
 
 const useStyles = createStyles((theme) => ({
@@ -65,10 +66,13 @@ interface HeaderSimpleProps {
 // HeaderSimple component that renders the links with a hamburger menu
 export const HeaderSimple: React.FC<HeaderSimpleProps> = ({ links, burgerOpened, burgerToggle, showSidebar}) => {
 
-  const { classes, cx } = useStyles();
+  const { user } = useUser();
+  const { classes, cx, theme } = useStyles();
   const location = useLocation();
   const [active, setActive] = useState(location.pathname);
   const headerPosition = showSidebar ? 'fixed' : 'absolute';
+
+  console.log( theme.colorScheme )
 
   const items = links.map((link) => (
     <NavLink
@@ -87,14 +91,22 @@ export const HeaderSimple: React.FC<HeaderSimpleProps> = ({ links, burgerOpened,
   return (
     <Header height={60} className={classes.header} pos={ headerPosition }>
 
-        <Title> Kevin Griley </Title>
+        <Group spacing={0}>
+          { showSidebar ? <Burger opened={burgerOpened} onClick={burgerToggle} className={classes.burger} size="md" /> : <></> }
+          <span>
+          <Image
+            src={ theme.colorScheme === 'dark' ? '/api/static/darkLogo.png' : '/api/static/lightLogo.png' }
+            alt="kgLogo"
+            height={50}
+          />
+          </span>
+        </Group>
+
         <Group spacing={5} className={classes.links}>
-          
           <SwitchToggle />
           {items}
-          
         </Group>
-        { showSidebar ? <Burger opened={burgerOpened} onClick={burgerToggle} className={classes.burger} size="md" /> : <></> }
+        
 
     </Header>
   );
