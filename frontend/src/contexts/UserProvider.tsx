@@ -29,8 +29,8 @@ const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
         })();
     }, [api]);
 
-    const login = async (username: string, password: string) => {
-        const result = await api.login({ username, password });
+    const login = async (email: string, password: string) => {
+        const result = await api.getAccessToken({ username: email, password: password });
         if (result.ok) {
             const response = await api.get('/users/me');
             setUser(response.ok ? response.body : null);

@@ -98,7 +98,7 @@ export class FastApiClient {
     return this.request({method: "DELETE", url, ...options});
   }
 
-  async login(body: {[key: string]: any }) {
+  async getAccessToken(body: {[key: string]: any }) {
     const r =  await this.request({formType: "form", method: "POST", url: LOGIN_URL, body });
     if (r.ok) {
       const data = r.body;
