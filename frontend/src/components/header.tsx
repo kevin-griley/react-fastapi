@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { createStyles, Header, Group, Burger, Title, Image} from '@mantine/core';
-import { SwitchToggle } from './SwitchToggle'; 
 import { NavLink, useLocation } from 'react-router-dom';
 import { useUser } from '../contexts/UserProvider';
 import { UserMenu } from './userMenu';
@@ -58,35 +57,17 @@ const useStyles = createStyles((theme) => ({
 
 // Props interface for HeaderSimple component
 interface HeaderSimpleProps {
-  links: { link: string; label: string }[];
   burgerOpened: boolean;
   burgerToggle?: () => void;
   showSidebar: boolean;
 }
 
 // HeaderSimple component that renders the links with a hamburger menu
-export const HeaderSimple: React.FC<HeaderSimpleProps> = ({ links, burgerOpened, burgerToggle, showSidebar}) => {
+export const HeaderSimple: React.FC<HeaderSimpleProps> = ({ burgerOpened, burgerToggle, showSidebar}) => {
 
   const { user } = useUser();
-  const { classes, cx, theme } = useStyles();
-  const location = useLocation();
-  const [active, setActive] = useState(location.pathname);
+  const { classes, theme } = useStyles();
   const headerPosition = showSidebar ? 'fixed' : 'absolute';
-
-  console.log( theme.colorScheme )
-
-  const items = links.map((link) => (
-    <NavLink
-      key={link.label}
-      to={link.link}
-      className={cx(classes.link, { [classes.linkActive]: active === link.link })}
-      onClick={() => {
-        setActive(link.link);
-      }}
-    >
-      {link.label}
-    </NavLink>
-  ));
 
   return (
     <Header height={60} className={classes.header} pos={ headerPosition }  >
@@ -104,11 +85,7 @@ export const HeaderSimple: React.FC<HeaderSimpleProps> = ({ links, burgerOpened,
 
         <Group spacing={5} className={classes.links}>
 
-        <SwitchToggle />
-
           { user ? < UserMenu/> : <></> }
-
-          { !user ? items : <></> }
 
         </Group>
         

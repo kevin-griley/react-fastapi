@@ -67,7 +67,7 @@ export default function Body({ showSidebar, children }: BodyProps ) {
 
         footer={ !showSidebar ? <FooterLinks data={ foots }/> : <></> }
 
-        header={ <HeaderSimple showSidebar={ showSidebar } burgerOpened={opened} burgerToggle={ toggle } links={ navs }/> }
+        header={ <HeaderSimple showSidebar={ showSidebar } burgerOpened={opened} burgerToggle={ toggle } /> }
 
       >
         { children }

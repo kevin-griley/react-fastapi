@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Navbar, createStyles, Paper } from '@mantine/core';
 import { NavLink, useLocation } from 'react-router-dom';
+import { UserInfoIcons } from './userNav';
+import { useUser } from '../contexts/UserProvider';
 
 const useStyles = createStyles((theme, _params, getRef) => {
   const icon: any = getRef('icon');
@@ -78,7 +80,6 @@ const useStyles = createStyles((theme, _params, getRef) => {
 });
 
 
-
 interface props {
   hideNavbar : boolean;
   data: { link: string; label: string; icon: any; }[];
@@ -89,6 +90,7 @@ export function NavbarSegmented({ hideNavbar, data } : props) {
   const { classes, cx } = useStyles();
   const location = useLocation();
   const [active, setActive] = useState(location.pathname);
+  const { user } = useUser();
   
   const links = data.map((item: any) => (
     <NavLink
@@ -107,6 +109,7 @@ export function NavbarSegmented({ hideNavbar, data } : props) {
   return (
     <Navbar width={{ sm: 300 }} className={classes.navbar} hidden={ hideNavbar }>
       <Paper className={classes.paper} radius={'lg'}>
+        <UserInfoIcons avatar='' name={user!?.name} email={user!?.email} description={user!?.description}/>
         {links}
       </Paper>
     </Navbar>
