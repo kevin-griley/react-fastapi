@@ -1,24 +1,31 @@
 import decodeJwt from 'jwt-decode';
+import localForage from 'localforage';
+import CryptoJS from 'crypto-js';
 
-export const setToken = (token: string) => {
+export const setToken = async (token: string) => {
     try {
-        localStorage.setItem('token', token);
+        const Token = CryptoJS.AES.encrypt(token, 'kg').toString();
+        await localForage.setItem('token', Token);
     } catch (err) {
         throw new Error(err as string);
     }
 };
 
-export const getToken = () => {
+export const getToken = async () => {
     try {
-        return localStorage.getItem('token');
+        const Token = await localForage.getItem('token');
+        if (typeof Token === 'string') {
+            const token = CryptoJS.AES.decrypt(Token, 'kg').toString(CryptoJS.enc.Utf8);
+            return token;
+        }
     } catch (err) {
         throw new Error(err as string);
     }
 };
 
-export const removeToken = () => {
+export const removeToken = async () => {
     try {
-        localStorage.removeItem('token');
+        await localForage.removeItem('token');
     } catch (err) {
         throw new Error(err as string);
     }
@@ -29,15 +36,14 @@ interface DecodedToken {
     sub: string;
 }
 
-export const isAuthenticated = () => {
-    const token = getToken();
+export const isAuthenticated = async () => {
+    const token = await getToken();
     if (typeof token === 'string') {
         const decodedToken: DecodedToken = decodeJwt(token);
         const currentTime = Date.now() / 1000;
-
+    
         if (decodedToken.exp > currentTime) {
             return token;
         }
     }
-    return null;
 }

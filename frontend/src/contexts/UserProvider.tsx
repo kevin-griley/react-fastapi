@@ -19,7 +19,7 @@ const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
 
     useEffect(() => {
         (async () => {
-            const token = isAuthenticated();
+            const token = await isAuthenticated();
             if (token) {
                 const response = await api.get('/users/me');
                 setUser(response.ok ? response.body : null);
@@ -40,7 +40,7 @@ const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
     };
 
     const logout = async () => {
-        removeToken();
+        await removeToken();
         setUser(null);
     };
 

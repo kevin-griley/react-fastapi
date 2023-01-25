@@ -42,7 +42,7 @@ export class FastApiClient {
         break;
     }
 
-    const token = isAuthenticated();
+    const token = await isAuthenticated();
     if (token) {
       options.headers = {
         ...options.headers,
@@ -103,7 +103,7 @@ export class FastApiClient {
     if (r.ok) {
       const data = r.body;
       if ('access_token' in data) {
-        setToken(data['access_token']);
+        await setToken(data['access_token']);
       }
     }
     return r;
