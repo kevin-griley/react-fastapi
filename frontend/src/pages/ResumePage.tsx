@@ -1,4 +1,4 @@
-import { Paper, createStyles } from '@mantine/core';
+import { Paper, createStyles, Container } from '@mantine/core';
 
 import Body from '../components/Body';
 
@@ -25,9 +25,11 @@ export default function ResumePage() {
   return (
       <Body showSidebar >
         <Paper className={ classes.body } radius="lg" >
-          <ResumeHeader />
-          <ResumeExperience />
-          <ResumeSkills />
+          <Container>
+            <ResumeHeader />
+            <ResumeExperience />
+            <ResumeSkills />
+          </Container>
         </Paper>
       </Body>
   )

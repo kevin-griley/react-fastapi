@@ -1,11 +1,17 @@
-import { useState } from 'react';
 import { createStyles, Header, Group, Burger, Title, Image} from '@mantine/core';
-import { NavLink, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useUser } from '../contexts/UserProvider';
 import { UserMenu } from './userMenu';
 
 
 const useStyles = createStyles((theme) => ({
+
+  image: {
+    '&:hover': {
+      cursor: 'pointer',
+    },
+  },
+
   header: {
     margin: `0 ${theme.spacing.md}px`,
     padding: `${theme.spacing.md}px ${theme.spacing.md}px`,
@@ -68,6 +74,8 @@ export const HeaderSimple: React.FC<HeaderSimpleProps> = ({ burgerOpened, burger
   const { user } = useUser();
   const { classes, theme } = useStyles();
   const headerPosition = showSidebar ? 'fixed' : 'absolute';
+  const navigate = useNavigate();
+  function goHome() {navigate('/');}
 
   return (
     <Header height={60} className={classes.header} pos={ headerPosition }  >
@@ -79,6 +87,8 @@ export const HeaderSimple: React.FC<HeaderSimpleProps> = ({ burgerOpened, burger
             src={ theme.colorScheme === 'dark' ? '/api/static/darkLogo.png' : '/api/static/lightLogo.png' }
             alt="kgLogo"
             height={50}
+            className={classes.image}
+            onClick={goHome}
           />
           </span>
         </Group>

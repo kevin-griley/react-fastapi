@@ -18,7 +18,7 @@ export default function Body({ showSidebar, children }: BodyProps ) {
     const theme = useMantineTheme();
 
     const tabs = [
-      { link: "/", label: "Resume", icon: IconUsers },
+      { link: "/resume", label: "Resume", icon: IconUsers },
       { link: "/feed", label: "Feed", icon: IconUsers  },
     ];
 
@@ -31,7 +31,7 @@ export default function Body({ showSidebar, children }: BodyProps ) {
           "links": [
             {
               "label": "Resume",
-              "link": "/"
+              "link": "/resume"
             },
           ] }, {
           "title": "Feed",

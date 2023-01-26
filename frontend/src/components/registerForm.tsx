@@ -29,9 +29,8 @@ const useStyles = createStyles((theme) => ({
       boxShadow: theme.shadows.lg,
       height: '100%',
       backgroundSize: 'cover',
-      backgroundImage:
-        'url(https://images.unsplash.com/photo-1536152470836-b943b246224c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1476&q=80)',
-    
+      backgroundImage: 'linear-gradient(250deg, rgba(130, 201, 30, 0) 0%, #062343 95%),url(https://images.unsplash.com/photo-1536152470836-b943b246224c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1476&q=80)',
+
       
       [`@media (max-width: ${theme.breakpoints.xs}px)`]: {
         paddingLeft: theme.spacing.xl * 1,
